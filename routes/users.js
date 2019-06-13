@@ -15,19 +15,20 @@ router.get('/', (req, res) => {
 })
 
 router.get('/movies', (req, res) =>{
-  db.getUsers()
+  db.getListMovies()
   .then(movies =>{
-    res.render('movies', movies)
+    console.log(movies)
+    res.render('movies', {movies: movies})
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
 })
 
-router.get('/ratings', (req, res) =>{
+router.get('/users', (req, res) =>{
   db.getUsers()
-  .then(ratings =>{
-    res.render('ratings', ratings)
+  .then(users =>{
+    res.render('users', {users: users})
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
