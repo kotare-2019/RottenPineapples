@@ -18,14 +18,41 @@ jest.mock('../db', () => ({
 
 const server = require('../server')
 
+//HOME PAGE ROUTE
 test('GET /', () => {
   return request(server)
     .get('/')
     .expect(200)
     .then((res) => {
       const $ = cheerio.load(res.text)
+      const firstLiText = $('h1').first().text()
+      expect(firstLiText).toBe('ROTTEN PINEAPPLES')
+    })
+    .catch(err => expect(err).toBeNull())
+})
+
+//USER PAGE TEST
+test('GET /users', () => {
+  return request(server)
+    .get('/users')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
       const firstLiText = $('li').first().text()
-      expect(firstLiText).toBe('test user 2 (test2@user.nz)')
+      expect(firstLiText).toBe('test user 2, test2@user.nz')
+    })
+    .catch(err => expect(err).toBeNull())
+})
+
+//MOVIES LIST TEST
+test('GET /movies', () => {
+  return request(server)
+    .get('/movies')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      const firstLiText = $('li').first().text()
+      expect(firstLiText).toBe('A.I., Steven Spielberg 2001')
     })
     .catch(err => expect(err).toBeNull())
 })
