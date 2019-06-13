@@ -13,11 +13,11 @@ module.exports = {
   getUserRecommendations: getUserRecommendations
 }
 
-function getUsers (db = connection) {
+function getUsers(db = connection) {
   return db('users').select()
 }
 
-function getUser (id, db = connection) {
+function getUser(id, db = connection) {
   return db('users').where('id', id).first()
 }
 
