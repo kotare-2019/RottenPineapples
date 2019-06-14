@@ -23,7 +23,7 @@ test('getUsers gets all users', () => {
 
 test('getUser gets a single user', () => {
   const expected = 'test user 1'
-  return db.getUser(99901, testDb)
+  return db.getUser(1, testDb)
     .then(user => {
       const actual = user.name
       expect(actual).toBe(expected)
