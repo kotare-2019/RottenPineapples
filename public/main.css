@@ -58,5 +58,13 @@ footer {
 ul {
     column-count: 4;
     margin-top: 450px;
+    margin-left: 135px;
+    font-size: 15px;
+}
+
+.usersList {
+    column-count: 4;
+    margin-top: 450px;
     margin-left: 150px;
+    font-size: 19px;
 }

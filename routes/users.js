@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/movies', (req, res) =>{
   db.getListMovies()
+  db.addRatingToMovie()
   .then(movies =>{
     console.log(movies)
     res.render('movies', {movies: movies})
@@ -36,9 +37,10 @@ router.get('/users', (req, res) =>{
 })
 
 router.get('/recomendations', (req, res) =>{
-  db.getUsers()
-  .then(recomendations =>{
-    res.render('recomendations', recomendations)
+  db.getRecommendations()
+  .then(recommendations =>{
+    console.log(recommendations)
+    res.render('recomendations', {recommendations:recommendations})
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
