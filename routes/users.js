@@ -46,4 +46,17 @@ router.get('/recomendations', (req, res) =>{
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
 })
+
+router.get('/movie/:id', (req, res) =>{
+  db.getMovie(req.params.id)
+  .then(movie =>{
+    console.log(movie)
+    res.render('movie',movie)
+  })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+})
+})
+
+
 module.exports = router
