@@ -13,6 +13,7 @@ module.exports = {
   getUserRecommendations: getUserRecommendations,
   addRatingToMovie: addRatingToMovie,
   getRecommendations: getRecommendations,
+  addUserToRecommendation: addUserToRecommendation,
 }
 
 function getUsers(db = connection) {
@@ -49,10 +50,14 @@ function getMovieRec (movieId, db = connection) {
   return db('recommendations').where('movie_id', movieId).select('rec')
 }
 
-function addRatingToMovie (id, db = connection) {
+function addRatingToMovie (db = connection) {
   return db('movies').join('ratings', 'movies.id', 'movie_id')
 }
 
 function getRecommendations (db = connection) {
   return db('recommendations').select()
+}
+
+function addUserToRecommendation (db = connection) {
+  return db('users').join('recommendations', 'users.id', 'user_id')
 }
