@@ -2,6 +2,6 @@
 <p><a href="../">Home</a></p>
 <ul>
   {{#each movies}}
-  <li class="movies">{{title}}, {{director}}, {{year}} Rating: {{rating}}/10</li>
+  <li class="movies"><a href="/movie/{{id}}">{{title}}</a>, {{director}} {{year}} Rating: {{rating}}/10</li>
   {{/each}}
 </ul>

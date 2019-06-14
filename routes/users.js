@@ -15,10 +15,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/movies', (req, res) =>{
-  db.getListMovies()
   db.addRatingToMovie()
   .then(movies =>{
-    console.log(movies)
+    console.log({movies})
     res.render('movies', {movies: movies})
   })
   .catch(err => {
@@ -37,13 +36,27 @@ router.get('/users', (req, res) =>{
 })
 
 router.get('/recomendations', (req, res) =>{
-  db.getRecommendations()
+  // db.getRecommendations()
+  db.addUserToRecommendation()
   .then(recommendations =>{
     console.log(recommendations)
-    res.render('recomendations', {recommendations:recommendations})
+    res.render('recomendations', {recommendations: recommendations})
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
 })
+
+router.get('/movie/:id', (req, res) =>{
+  db.getMovie(req.params.id)
+  .then(movie =>{
+    console.log(movie)
+    res.render('movie', movie)
+  })
+  .catch(err => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+})
+})
+
+
 module.exports = router

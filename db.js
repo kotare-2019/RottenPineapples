@@ -13,6 +13,7 @@ module.exports = {
   getUserRecommendations: getUserRecommendations,
   addRatingToMovie: addRatingToMovie,
   getRecommendations: getRecommendations,
+  addUserToRecommendation: addUserToRecommendation,
 }
 
 function getUsers(db = connection) {
@@ -24,18 +25,22 @@ function getUser(id, db = connection) {
 }
 
 function getMovie (id, db = connection) {
-  return db('movies').where('id', id).first()
+  return db('movies')
+    .join('ratings', 'movies.id', 'ratings.movie_id')
+    .join('recommendations', 'movies.id', 'recommendations.movie_id')
+    .where('movies.id', id)
+    .first().select()
 }
 
 function getListMovies (db = connection) {
   return db('movies').select()
 }
-//first draft
+
 function getUserRatings (userId, db = connection){
   return db('movies').join('ratings', 'movies.id', '=', 'ratings.movie_id' )
           .where('ratings.user_id', userId).select()
 }
-//first draft
+
 function getUserRecommendations (userId, db = connection){
   return db('movies').join('recommendations', 'movies.id', '=', 'recommendations.movie_id' )
           .where('recommendations.user_id', userId).select()
@@ -49,10 +54,14 @@ function getMovieRec (movieId, db = connection) {
   return db('recommendations').where('movie_id', movieId).select('rec')
 }
 
-function addRatingToMovie (id, db = connection) {
+function addRatingToMovie (db = connection) {
   return db('movies').join('ratings', 'movies.id', 'movie_id')
 }
 
 function getRecommendations (db = connection) {
   return db('recommendations').select()
+}
+
+function addUserToRecommendation (db = connection) {
+  return db('users').join('recommendations', 'users.id', 'user_id')
 }

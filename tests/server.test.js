@@ -13,10 +13,69 @@ jest.mock('../db', () => ({
     {id: 1, title: 'A.I.', year: '2001', director: 'Steven Spielberg'}, 
     {id: 2, title: 'After Earth', year: '2013', director: 'M. Night Shyamalan'}, 
     {id: 3, title: 'Alien', year: '1979', director: 'Ridley Scott'}
+  ]),
+  addRatingToMovie: () => Promise.resolve([
+    { id: 61,
+      title: 'A.I.',
+      director: 'Steven Spielberg',
+      year: '2001',
+      url: null,
+      rating: 6,
+      movie_id: 1,
+      user_id: 1 },
+    { id: 62,
+      title: 'After Earth',
+      director: 'M. Night Shyamalan',
+      year: '2013',
+      url: null,
+      rating: 1,
+      movie_id: 2,
+      user_id: 2 },
+    { id: 63,
+      title: 'Alien',
+      director: 'Ridley Scott',
+      year: '1979',
+      url: null,
+      rating: 9,
+      movie_id: 3,
+      user_id: 3 },
+  ]),
+  addUserToRecommendation: () => Promise.resolve([
+    { id: 1,
+      name: 'Hanh',
+      email: 'hanh@dev.com',
+      rec: 'Inception',
+      movie_id: 18,
+      user_id: 1 },
+    { id: 2,
+      name: 'Hamish',
+      email: 'hamish@dev.com',
+      rec: 'Alien',
+      movie_id: 3,
+      user_id: 2 },
+    { id: 3,
+      name: 'Dan',
+      email: 'dan@dev.com',
+      rec: 'Robocop',
+      movie_id: 27,
+      user_id: 3 },
   ])
 }))
 
 const server = require('../server')
+
+// RECOMMENDATIONS PAGE TEST
+test('GET /recomendations', () => {
+  return request(server)
+    .get('/recomendations')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      const firstLiText = $('li').first().text()
+      expect(firstLiText).toEqual('Inception: recommended by Hanh')
+    })
+    .catch(err => expect(err).toBeNull())
+})
 
 //HOME PAGE ROUTE
 test('GET /', () => {
@@ -52,7 +111,7 @@ test('GET /movies', () => {
     .then((res) => {
       const $ = cheerio.load(res.text)
       const firstLiText = $('li').first().text()
-      expect(firstLiText).toBe('A.I., Steven Spielberg 2001')
+      expect(firstLiText).toBe('A.I., Steven Spielberg 2001 Rating: 6/10')
     })
     .catch(err => expect(err).toBeNull())
 })
