@@ -38,9 +38,10 @@ router.get('/users', (req, res) =>{
 
 router.get('/recomendations', (req, res) =>{
   db.getRecommendations()
+  db.addUserToRecommendation()
   .then(recommendations =>{
     console.log(recommendations)
-    res.render('recomendations', {recommendations:recommendations})
+    res.render('recomendations', {recommendations: recommendations})
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
