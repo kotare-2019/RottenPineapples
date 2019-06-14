@@ -51,7 +51,7 @@ router.get('/movie/:id', (req, res) =>{
   db.getMovie(req.params.id)
   .then(movie =>{
     console.log(movie)
-    res.render('movie',movie)
+    res.render('movie', movie)
   })
   .catch(err => {
     res.status(500).send('DATABASE ERROR: ' + err.message)

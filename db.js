@@ -35,12 +35,12 @@ function getMovie (id, db = connection) {
 function getListMovies (db = connection) {
   return db('movies').select()
 }
-//first draft
+
 function getUserRatings (userId, db = connection){
   return db('movies').join('ratings', 'movies.id', '=', 'ratings.movie_id' )
           .where('ratings.user_id', userId).select()
 }
-//first draft
+
 function getUserRecommendations (userId, db = connection){
   return db('movies').join('recommendations', 'movies.id', '=', 'recommendations.movie_id' )
           .where('recommendations.user_id', userId).select()

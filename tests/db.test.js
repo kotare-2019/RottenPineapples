@@ -30,3 +30,14 @@ test('getUser gets a single user', () => {
     })
     .catch(err => expect(err).toBeNull())
 })
+
+test('getMovies gets all movies', () => {
+  // One for each letter of the alphabet!
+  const expected = 3
+  return db.getListMovies(testDb)
+    .then(movies => {
+      const actual = movies.length
+      expect(actual).toBe(expected)
+    })
+    .catch(err => expect(err).toBeNull())
+})
